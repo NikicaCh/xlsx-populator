@@ -1,6 +1,8 @@
 const Express = require("express");
 const XlsxPopulate = require('xlsx-populate');
 
+const Port = process.env.Port || 3000
+
 
 
 let app = Express();
@@ -20,6 +22,6 @@ app.get("/", (req, res) => {
 
 
 
-app.listen(3000, () => {
-    console.log("Listening on port 3000")
+app.listen(Port, () => {
+    console.log(`Listening on port ${Port}`)
 })
