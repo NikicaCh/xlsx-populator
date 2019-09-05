@@ -3,6 +3,9 @@ const XlsxPopulate = require('xlsx-populate');
 const bodyParser = require("body-parser");
 
 
+let file = "";
+
+
 let app = Express();
 
 let port = process.env.PORT || 8000;
@@ -19,24 +22,34 @@ app.get("/", (req, res) => {
     res.send("HELLO")
 })
 
+
 app.post("/", (req, res) => {
     res.set('Content-Type', 'application/json');
     let data = req.body.data;
-    res.status(201);
-    res.json();
-    XlsxPopulate.fromFileAsync("./NTK-MAKS dnevni izvestaj.xlsx")
+    XlsxPopulate.fromFileAsync("../NTK-MAKS dnevni izvestaj.xlsx")
     .then(workbook => {
         data.map((obj, index) => {
             workbook.sheet("Sheet2").cell(`A${index+1}`).value(obj.name);
             workbook.sheet("Sheet2").cell(`B${index+1}`).value(obj.id);
             workbook.sheet("Sheet2").cell(`C${index+1}`).value(obj.quantity);
         })
-        return workbook.outputAsync("base64")
-        .then(function (base64) {
-            location.href = "data:" + XlsxPopulate.MIME_TYPE + ";base64," + base64;
-        });
-    });
+        workbook.outputAsync("base64")
+        .then((data) => {
+            file = data;
+        })
+    })
+    res.status(201);
+    res.json();
 })
+
+app.get("/download", (req, res) => {
+    if(file !== "") {
+        res.send(file)
+        file = ""
+    }
+})
+
+
 
 
 
