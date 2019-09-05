@@ -35,7 +35,7 @@ app.post("/", (req, res) => {
             workbook.sheet("Sheet2").cell(`B${index+1}`).value(obj.id);
             workbook.sheet("Sheet2").cell(`C${index+1}`).value(obj.quantity);
         })
-        workbook.outputAsync()
+        workbook.outputAsync("base64")
         .then((data) => {
             file = data;
         })
