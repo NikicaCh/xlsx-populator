@@ -24,14 +24,14 @@ app.post("/", (req, res) => {
     let data = req.body.data;
     res.status(201);
     res.json();
-    XlsxPopulate.fromFileAsync("../NTK-MAKS dnevni izvestaj.xlsx")
+    XlsxPopulate.fromFileAsync("./NTK-MAKS dnevni izvestaj.xlsx")
     .then(workbook => {
         data.map((obj, index) => {
             workbook.sheet("Sheet2").cell(`A${index+1}`).value(obj.name);
             workbook.sheet("Sheet2").cell(`B${index+1}`).value(obj.id);
             workbook.sheet("Sheet2").cell(`C${index+1}`).value(obj.quantity);
         })
-        return workbook.toFileAsync(`../NTK-MAKS dnevni izvestaj 04.09.2019.xlsx`);
+        return workbook.toFileAsync(`C:\Users\nikicam26\Desktop/NTK-MAKS dnevni izvestaj 04.09.2019.xlsx`);
     });
 })
 
