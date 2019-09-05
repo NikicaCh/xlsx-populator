@@ -31,22 +31,10 @@ app.post("/", (req, res) => {
             workbook.sheet("Sheet2").cell(`B${index+1}`).value(obj.id);
             workbook.sheet("Sheet2").cell(`C${index+1}`).value(obj.quantity);
         })
-        return workbook.outputAsync()
-        .then((blob) => {
-            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                // If IE, you must uses a different method.
-                window.navigator.msSaveOrOpenBlob(blob, "out.xlsx");
-            } else {
-                var url = window.URL.createObjectURL(blob);
-                var a = document.createElement("a");
-                document.body.appendChild(a);
-                a.href = url;
-                a.download = "out.xlsx";
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-            }
-        })
+        return workbook.outputAsync("base64")
+        .then(function (base64) {
+            location.href = "data:" + XlsxPopulate.MIME_TYPE + ";base64," + base64;
+        });
     });
 })
 
