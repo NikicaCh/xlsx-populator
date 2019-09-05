@@ -28,7 +28,7 @@ app.post("/", (req, res) => {
     let data = req.body.data;
     res.status(201);
     res.json();
-    XlsxPopulate.fromFileAsync("../NTK-MAKS dnevni izvestaj.xlsx")
+    XlsxPopulate.fromFileAsync("./NTK-MAKS dnevni izvestaj.xlsx")
     .then(workbook => {
         data.map((obj, index) => {
             workbook.sheet("Sheet2").cell(`A${index+1}`).value(obj.name);
