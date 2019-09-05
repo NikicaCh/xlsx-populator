@@ -26,6 +26,8 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
     res.set('Content-Type', 'application/json');
     let data = req.body.data;
+    res.status(201);
+    res.json();
     XlsxPopulate.fromFileAsync("../NTK-MAKS dnevni izvestaj.xlsx")
     .then(workbook => {
         data.map((obj, index) => {
@@ -38,15 +40,10 @@ app.post("/", (req, res) => {
             file = data;
         })
     })
-    res.status(201);
-    res.json();
 })
 
 app.get("/download", (req, res) => {
-    if(file !== "") {
-        res.send(file)
-        file = ""
-    }
+    res.send(file)
 })
 
 
