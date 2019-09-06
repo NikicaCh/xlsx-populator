@@ -10,8 +10,9 @@ let app = Express();
 
 let port = process.env.PORT || 8000;
 
+
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '50mb', extended: true}))
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -28,12 +29,18 @@ app.post("/", (req, res) => {
     let data = req.body.data;
     res.status(201);
     res.json();
+    console.log(data[0])
     XlsxPopulate.fromFileAsync("./NTK-MAKS dnevni izvestaj.xlsx")
     .then(workbook => {
-        data.map((obj, index) => {
-            workbook.sheet("Sheet2").cell(`A${index+1}`).value(obj.name);
-            workbook.sheet("Sheet2").cell(`B${index+1}`).value(obj.id);
-            workbook.sheet("Sheet2").cell(`C${index+1}`).value(obj.quantity);
+        data[0].map((obj, index) => {
+            workbook.sheet("Sheet2").cell(`A${index+1}`).value(obj.Art);
+            workbook.sheet("Sheet2").cell(`B${index+1}`).value(obj.Bolla);
+            workbook.sheet("Sheet2").cell(`C${index+1}`).value(obj.Quantity);
+        })
+        data[1].map((obj, index) => {
+            workbook.sheet("Sheet2").cell(`E${index+1}`).value(obj.Art);
+            workbook.sheet("Sheet2").cell(`F${index+1}`).value(obj.Bolla);
+            workbook.sheet("Sheet2").cell(`G${index+1}`).value(obj.Quantity);
         })
         workbook.outputAsync("base64")
         .then((data) => {
