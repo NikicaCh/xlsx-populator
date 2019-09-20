@@ -34,12 +34,12 @@ app.post("/report", (req, res, next) => {
         data[0].map((obj, index) => {
             workbook.sheet("Sheet2").cell(`A${index+1}`).value(obj.Art);
             workbook.sheet("Sheet2").cell(`B${index+1}`).value(obj.Bolla);
-            workbook.sheet("Sheet2").cell(`C${index+1}`).value(obj.Quantity);
+            workbook.sheet("Sheet2").cell(`C${index+1}`).value(parseInt(obj.Quantity));
         })
         data[1].map((obj, index) => {
             workbook.sheet("Sheet2").cell(`E${index+1}`).value(obj.Art);
             workbook.sheet("Sheet2").cell(`F${index+1}`).value(obj.Bolla);
-            workbook.sheet("Sheet2").cell(`G${index+1}`).value(obj.Quantity);
+            workbook.sheet("Sheet2").cell(`G${index+1}`).value(parseInt(obj.Quantity));
         })
         workbook.outputAsync("base64")
         .then((data) => {
