@@ -60,6 +60,74 @@ let exportFile = "";
 
 
 app.post("/export", (req, res) => {
+    let arts = [
+        {
+          name: "ZAFFIRO",
+          type: "NATURINO"
+        },
+        {
+          name: "RUBINO",
+          type: "NATURINO"
+        },
+        {
+          name: "NYMERIA",
+          type: "NATURINO"
+        },
+        {
+          name: "RASHA",
+          type: "NATURINO"
+        },
+        {
+          name: "IMMA",
+          type: "NATURINO"
+        },
+        {
+          name: "MERYL",
+          type: "NATURINO"
+        },
+        {
+          name: "PARADIS",
+          type: "NATURINO"
+        },
+        {
+          name: "IZUMI",
+          type: "NATURINO"
+        }, {
+          name: "NEW RIVER",
+          type: "FALCOTTO"
+        },
+        {
+          name: "BARRAL",
+          type: "FALCOTTO"
+        },
+        {
+          name: "CATANIA",
+          type: "NATURINO"
+        },
+        {
+          name: "PAVIA",
+          type: "NATURINO"
+        },
+        {
+          name: "ABBEY",
+          type: "NATURINO"
+        }, {
+          name: "ABBEY VL",
+          type: "FALCOTTO"
+        },
+        {
+          name: "BONACOLSI",
+          type: "FALCOTTO"
+        },
+        {
+          name: "BALLONNE",
+          type: "NATURINO"
+        },
+        {
+          name: "SPLICE",
+          type: "NATURINO"
+        },
+      ]
     res.set('Content-Type', 'application/json');
     let data = req.body.data;
     let a=0, b=0, c=0, d=0; //populated spaces in 4 columns
@@ -82,14 +150,25 @@ app.post("/export", (req, res) => {
                         let index = a + 6 + _index;
                         totalIndex = index;
                         total += parseInt(obj[key][_key].Quantity);
-                        workbook.sheet("Sheet1").cell(`B${index}`).value(obj[key][_key].Art)
+                        let artName = obj[key][_key].Art;
+                        let name = ""
+                        arts.map((art) => {
+                            if(art.name === artName) {
+                                if(art.type === "NATURINO") {
+                                    name = `N.${artName}`
+                                } else {
+                                    name = `F.${artName}`
+                                }
+                            }
+                        })
+                        workbook.sheet("Sheet1").cell(`B${index}`).value(name)
                         workbook.sheet("Sheet1").cell(`C${index}`).value(obj[key][_key].Bolla)
                         workbook.sheet("Sheet1").cell(`D${index}`).value(obj[key][_key].Quantity)
                         workbook.sheet("Sheet1").cell(`E${index}`).value(obj[key][_key].ImportNo)
                     })
                     workbook.sheet("Sheet1").range(`A${totalIndex +1}:E${totalIndex +1}`).style("borderStyle", "medium")
                     workbook.sheet("Sheet1").cell(`B${totalIndex +1}`).value("VKUPNO").style("bold", true)
-                    workbook.sheet("Sheet1").cell(`D${totalIndex +1}`).value(total)
+                    workbook.sheet("Sheet1").cell(`D${totalIndex +1}`).value(total).style("bold", true)
                     totalA += total;
                     workbook.sheet("Sheet1").cell("D27").value(totalA)
                     a += objLength + 1;
@@ -101,14 +180,25 @@ app.post("/export", (req, res) => {
                         let index = b + 6 +_index;
                         totalIndex = index;
                         total += parseInt(obj[key][_key].Quantity);
-                        workbook.sheet("Sheet1").cell(`G${index}`).value(obj[key][_key].Art)
+                        let artName = obj[key][_key].Art;
+                        let name = ""
+                        arts.map((art) => {
+                            if(art.name === artName) {
+                                if(art.type === "NATURINO") {
+                                    name = `N.${artName}`
+                                } else {
+                                    name = `F.${artName}`
+                                }
+                            }
+                        })
+                        workbook.sheet("Sheet1").cell(`G${index}`).value(name)
                         workbook.sheet("Sheet1").cell(`H${index}`).value(obj[key][_key].Bolla)
                         workbook.sheet("Sheet1").cell(`I${index}`).value(obj[key][_key].Quantity)
                         workbook.sheet("Sheet1").cell(`J${index}`).value(obj[key][_key].ImportNo)
                     })
                     workbook.sheet("Sheet1").range(`F${totalIndex +1}:J${totalIndex +1}`).style("borderStyle", "medium")
                     workbook.sheet("Sheet1").cell(`G${totalIndex +1}`).value("VKUPNO").style("bold", true)
-                    workbook.sheet("Sheet1").cell(`I${totalIndex +1}`).value(total)
+                    workbook.sheet("Sheet1").cell(`I${totalIndex +1}`).value(total).style("bold", true)
                     totalB += total;
                     workbook.sheet("Sheet1").cell("I27").value(totalB)
                     b += objLength + 1;
@@ -120,14 +210,25 @@ app.post("/export", (req, res) => {
                         let index = c + 6 + _index;
                         totalIndex = index;
                         total += parseInt(obj[key][_key].Quantity);
-                        workbook.sheet("Sheet1").cell(`L${index}`).value(obj[key][_key].Art)
+                        let artName = obj[key][_key].Art;
+                        let name = ""
+                        arts.map((art) => {
+                            if(art.name === artName) {
+                                if(art.type === "NATURINO") {
+                                    name = `N.${artName}`
+                                } else {
+                                    name = `F.${artName}`
+                                }
+                            }
+                        })
+                        workbook.sheet("Sheet1").cell(`L${index}`).value(name)
                         workbook.sheet("Sheet1").cell(`M${index}`).value(obj[key][_key].Bolla)
                         workbook.sheet("Sheet1").cell(`N${index}`).value(obj[key][_key].Quantity)
                         workbook.sheet("Sheet1").cell(`O${index}`).value(obj[key][_key].ImportNo)
                     })
                     workbook.sheet("Sheet1").range(`K${totalIndex +1}:O${totalIndex +1}`).style("borderStyle", "medium")
                     workbook.sheet("Sheet1").cell(`L${totalIndex +1}`).value("VKUPNO").style("bold", true)
-                    workbook.sheet("Sheet1").cell(`N${totalIndex +1}`).value(total)
+                    workbook.sheet("Sheet1").cell(`N${totalIndex +1}`).value(total).style("bold", true)
                     totalC += total;
                     workbook.sheet("Sheet1").cell("N27").value(totalC)
                     c += objLength + 1;
@@ -139,14 +240,25 @@ app.post("/export", (req, res) => {
                         let index = d + 6 + _index;
                         totalIndex = index;
                         total += parseInt(obj[key][_key].Quantity);
-                        workbook.sheet("Sheet1").cell(`Q${index}`).value(obj[key][_key].Art)
+                        let artName = obj[key][_key].Art;
+                        let name = ""
+                        arts.map((art) => {
+                            if(art.name === artName) {
+                                if(art.type === "NATURINO") {
+                                    name = `N.${artName}`
+                                } else {
+                                    name = `F.${artName}`
+                                }
+                            }
+                        })
+                        workbook.sheet("Sheet1").cell(`Q${index}`).value(name)
                         workbook.sheet("Sheet1").cell(`R${index}`).value(obj[key][_key].Bolla)
                         workbook.sheet("Sheet1").cell(`S${index}`).value(obj[key][_key].Quantity)
                         workbook.sheet("Sheet1").cell(`T${index}`).value(obj[key][_key].ImportNo)
                     })
                     workbook.sheet("Sheet1").range(`P${totalIndex +1}:T${totalIndex +1}`).style("borderStyle", "medium")
                     workbook.sheet("Sheet1").cell(`Q${totalIndex +1}`).value("VKUPNO").style("bold", true)
-                    workbook.sheet("Sheet1").cell(`S${totalIndex +1}`).value(total)
+                    workbook.sheet("Sheet1").cell(`S${totalIndex +1}`).value(total).style("bold", true)
                     totalD += total;
                     workbook.sheet("Sheet1").cell("S27").value(totalD)
                     d += objLength + 1;
